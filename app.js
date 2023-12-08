@@ -2,6 +2,7 @@ const express = require('express');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const userRouter = require('./routes/userRouter');
+const healthRouter = require('./routes/healthRouter');
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/health', healthRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError('Route not found', 404));
