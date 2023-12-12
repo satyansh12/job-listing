@@ -59,3 +59,25 @@ exports.editJob = catchAsync(async (req, res, next) => {
     message: 'resource updated successfully'
   });
 });
+
+exports.getJobs = catchAsync(async (req, res, next) => {
+  const queryObj = { ...req.query };
+  const query = Job.find();
+
+  if (queryObj.jobPostion) {
+    query.find({ jobPostion: queryObj.jobPostion });
+  }
+
+  if (queryObj.skills) {
+    const skillsArr = queryObj.skills.split(',').map(el => el.trim());
+    query.find({ skills: { $in: skillsArr } });
+  }
+
+  const jobs = await query;
+
+  res.status(200).json({
+    status: 'success',
+    results: jobs.length,
+    data: { jobs }
+  });
+});
