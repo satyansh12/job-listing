@@ -1,3 +1,5 @@
+const AppError = require('../utils/appError');
+
 const sendDevError = (err, res) => {
   res.status(err.statusCode).json({
     status: err.status,
@@ -26,7 +28,19 @@ module.exports = (err, req, res, next) => {
   err.status = `${err.statusCode}`.startsWith('4') ? 'fail' : 'error';
 
   if (process.env.NODE_ENV.trim() === 'production') {
-    return sendProdError(err, res);
+    let error = Object.create(
+      Object.getPrototypeOf(err),
+      Object.getOwnPropertyDescriptors(err)
+    );
+
+    if (err.code === 11000) {
+      error = new AppError('Email already exists', 400);
+    }
+    if (error.name === 'ValidationError') {
+      error = new AppError(error.message, 402);
+    }
+
+    return sendProdError(error, res);
   }
   sendDevError(err, res);
 };

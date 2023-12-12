@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { promisify } = require('util');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -29,7 +30,8 @@ exports.login = catchAsync(async (req, res, next) => {
 
   res.status(200).json({
     status: 'success',
-    token: token
+    token: token,
+    recruiterName: user.name
   });
 });
 
@@ -41,6 +43,40 @@ exports.register = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     token: token,
-    data: { user }
+    recruiterName: user.name
   });
+});
+
+exports.protect = catchAsync(async (req, res, next) => {
+  // Check if token is available in headers
+  if (!req.headers.authorization) {
+    return next(new AppError('You are unauthorized to access this route', 401));
+  }
+
+  // get the token
+  const token = req.headers.authorization.split(' ')[1];
+
+  let decoded;
+
+  try {
+    decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY);
+  } catch (error) {
+    return next(
+      new AppError(
+        'Token is not valid, or has expired. Login to get the token.',
+        400
+      )
+    );
+  }
+
+  // Get user from token data
+  const user = await User.findById(decoded.id);
+
+  if (!user) {
+    return next(new AppError('User no longer exists'));
+  }
+
+  req.user = user;
+
+  next();
 });
