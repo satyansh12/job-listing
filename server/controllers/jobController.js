@@ -64,11 +64,11 @@ exports.getJobs = catchAsync(async (req, res, next) => {
   const queryObj = { ...req.query };
   const query = Job.find();
 
-  if (queryObj.jobPostion) {
+  if (queryObj.jobPostion && typeof queryObj.jobPostion === 'string') {
     query.find({ jobPostion: queryObj.jobPostion });
   }
 
-  if (queryObj.skills) {
+  if (queryObj.skills && typeof queryObj.skills === 'string') {
     const skillsArr = queryObj.skills.split(',').map(el => el.trim());
     query.find({ skills: { $in: skillsArr } });
   }
@@ -79,5 +79,15 @@ exports.getJobs = catchAsync(async (req, res, next) => {
     status: 'success',
     results: jobs.length,
     data: { jobs }
+  });
+});
+
+exports.getJob = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const job = await Job.findById(id);
+
+  res.status(200).send({
+    status: 'success',
+    data: { job }
   });
 });

@@ -9,6 +9,9 @@ router
   .get(authController.protect, jobController.getJobs)
   .post(authController.protect, jobController.addJob);
 
-router.route('/:id').put(authController.protect, jobController.editJob);
+router
+  .route('/:id')
+  .get(authController.protect, jobController.getJob)
+  .put(authController.protect, jobController.editJob);
 
 module.exports = router;

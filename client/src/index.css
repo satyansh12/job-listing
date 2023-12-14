@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Sahitya&display=swap');
+
+:root {
+  font-family: Poppins, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  --primary: #ed5353;
+  --primary-focus: #ff6b6b;
+  --secondary: #148a08;
+  --secondary-focus: #18a009;
+  --neutral: #7c7c7c;
+  --neutral-focus: #393939;
+  --error: #ff7373;
+  --error-focus: #ff8585;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
