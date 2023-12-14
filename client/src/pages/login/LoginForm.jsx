@@ -5,7 +5,7 @@ import styles from './styles/LoginForm.module.css';
 
 export default function LoginForm() {
   return (
-    <div className={styles.container}>
+    <form className={styles.container}>
       <Text step={8} weight="500">
         Already have an account?
       </Text>
@@ -23,6 +23,6 @@ export default function LoginForm() {
       <Text style={{ marginTop: '0.6rem' }} step={4}>
         Don’t have an account? <span>Sign up</span>
       </Text>
-    </div>
+    </form>
   );
 }
