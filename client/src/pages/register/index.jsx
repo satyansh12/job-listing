@@ -1,5 +1,4 @@
 import AuthPage from '../../components/AuthPage';
-import Banner from '../../components/Banner';
 import RegisterForm from './RegisterForm';
 import styles from './styles/index.module.css';
 

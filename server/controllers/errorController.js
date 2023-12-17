@@ -37,7 +37,7 @@ module.exports = (err, req, res, next) => {
       error = new AppError('Email already exists', 400);
     }
     if (error.name === 'ValidationError') {
-      error = new AppError(error.message, 402);
+      error = new AppError(error.message, 400);
     }
 
     return sendProdError(error, res);

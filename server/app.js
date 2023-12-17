@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 const userRouter = require('./routes/userRouter');
@@ -8,6 +9,7 @@ const jobRouter = require('./routes/jobRoute');
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 
 app.get('/', (req, res, next) => {
   res.status(200).json({

@@ -1,7 +1,18 @@
 import styles from './styles/Input.module.css';
 
-export default function Input({ placeholder }) {
+export default function Input({
+  placeholder,
+  label,
+  register,
+  required,
+  type = 'text',
+}) {
   return (
-    <input type="text" placeholder={placeholder} className={styles.input} />
+    <input
+      type={type}
+      placeholder={placeholder}
+      className={styles.input}
+      {...register(label, { required })}
+    />
   );
 }
