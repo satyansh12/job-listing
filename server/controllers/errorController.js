@@ -40,6 +40,10 @@ module.exports = (err, req, res, next) => {
       error = new AppError(error.message, 400);
     }
 
+    if (error.name === 'CastError') {
+      error = new AppError('Not found', 404);
+    }
+
     return sendProdError(error, res);
   }
   sendDevError(err, res);

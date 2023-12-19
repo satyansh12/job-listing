@@ -7,14 +7,16 @@ export default function Button({
   onClick,
   icon,
   inlineStyles,
+  size,
 }) {
   const buttonVariant = styles[variant];
   const buttonWithIcon = icon ? styles.withIcon : '';
+  const buttonSize = size == 'large' ? styles.largeButton : '';
 
   return (
     <button
       onClick={onClick}
-      className={`${styles.button} ${buttonVariant} ${buttonWithIcon}`}
+      className={`${styles.button} ${buttonVariant} ${buttonWithIcon} ${buttonSize}`}
       disabled={disabled}
       style={{ ...inlineStyles }}
     >

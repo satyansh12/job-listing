@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import styles from './styles/RootLayout.module.css';
+import styles from './RootLayout.module.css';
 
 export default function RootLayout() {
   return (

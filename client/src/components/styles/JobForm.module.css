@@ -1,0 +1,81 @@
+.container {
+  width: 100%;
+  max-width: 80%;
+}
+
+.container form {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.inputField {
+  display: flex;
+  align-items: baseline;
+  gap: 4rem;
+}
+
+input,
+textarea {
+  flex: 5;
+}
+
+label {
+  flex: 2;
+}
+
+.action {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+textarea {
+  padding: 10px 16px;
+  font-size: 16px;
+  letter-spacing: 0em;
+  line-height: 24px;
+  border-radius: 8px;
+  font-weight: 400;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  :focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+  }
+}
+
+.selectBox {
+  flex: 5;
+}
+
+select {
+  transform: translate(-10px, 0);
+  padding: 10px 16px;
+  font-size: 16px;
+  letter-spacing: 0em;
+  line-height: 24px;
+  border-radius: 8px;
+  font-weight: 400;
+  color: #212529;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  appearance: none;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  :focus {
+    color: #212529;
+    background-color: #fff;
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+  }
+}

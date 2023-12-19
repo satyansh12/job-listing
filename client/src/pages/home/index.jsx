@@ -1,11 +1,9 @@
-import Text from '../../components/ui/Text';
+import Header from '../../components/Header';
 
 export default function Home() {
   return (
     <div>
-      <Text step={6} weight="600">
-        Hello
-      </Text>
+      <Header />
     </div>
   );
 }

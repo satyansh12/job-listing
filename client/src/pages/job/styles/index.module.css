@@ -1,0 +1,91 @@
+.main {
+  max-width: 70%;
+  margin: auto;
+  position: relative;
+  top: -2rem;
+}
+
+.title {
+  composes: shadow from global;
+  background-color: var(--secondary);
+  padding: 2rem;
+  text-align: center;
+}
+
+.title p {
+  width: 100%;
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.0075em;
+  line-height: 36px;
+}
+
+.info {
+  composes: shadow from global;
+  background-color: var(--secondary);
+  padding: 3rem;
+  margin-top: 2rem;
+}
+
+.info > div {
+  margin-top: 2rem;
+}
+
+.info div:first-child {
+  margin-top: 0rem;
+}
+
+.metadata {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0.5;
+}
+
+.position {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+}
+
+.position > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.position button {
+  max-height: min-content;
+}
+
+.details {
+  display: flex;
+  gap: 4rem;
+  align-items: center;
+}
+
+.details > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.details .icon {
+  opacity: 0.5;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.about,
+.description,
+.skills,
+.additional {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.badge {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}

@@ -11,10 +11,6 @@ const jobSchema = mongoose.Schema({
     validate: [validator.isURL, 'Enter a valid URL'],
     required: [true, 'Logo is required']
   },
-  jobPostion: {
-    type: String,
-    required: [true, 'Job position is required']
-  },
   monthlySalary: {
     type: String,
     default: null,
@@ -22,7 +18,7 @@ const jobSchema = mongoose.Schema({
   },
   jobType: {
     type: String,
-    enum: ['Fulltime', 'Partime', 'Temporary'],
+    enum: ['Fulltime', 'Part time', 'Temporary'],
     required: [true, 'Job type is required']
   },
   category: {

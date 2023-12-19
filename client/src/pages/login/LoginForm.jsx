@@ -76,13 +76,19 @@ export default function LoginForm() {
       </Text>
 
       <div className={styles.inputs}>
-        <div>
-          <Input label="email" register={register} placeholder="Email"></Input>
+        <div className={styles.inputBox}>
+          <Input
+            variant="large"
+            label="email"
+            register={register}
+            placeholder="Email"
+          ></Input>
           <Text color="red">{errors.email?.message}</Text>
         </div>
 
-        <div>
+        <div className={styles.inputBox}>
           <Input
+            variant="large"
             label="password"
             register={register}
             type="password"
@@ -92,7 +98,7 @@ export default function LoginForm() {
         </div>
       </div>
 
-      <Button>Sing in</Button>
+      <Button size="large">Sing in</Button>
 
       <Text style={{ marginTop: '0.6rem' }} step={4}>
         Don’t have an account?{' '}

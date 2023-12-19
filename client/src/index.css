@@ -5,10 +5,11 @@
   line-height: 1.5;
   font-weight: 400;
 
+  --base: #ffefef;
   --primary: #ed5353;
   --primary-focus: #ff6b6b;
-  --secondary: #148a08;
-  --secondary-focus: #18a009;
+  --secondary: #ffffff;
+  --secondary-focus: #f9f9f9;
   --neutral: #7c7c7c;
   --neutral-focus: #393939;
   --error: #ff7373;
@@ -18,6 +19,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--base);
 }
 
 * {
@@ -30,4 +35,8 @@
 a {
   text-decoration: none;
   color: inherit;
+}
+
+.shadow {
+  box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }

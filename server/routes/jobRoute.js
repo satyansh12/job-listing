@@ -11,7 +11,7 @@ router
 
 router
   .route('/:id')
-  .get(authController.protect, jobController.getJob)
+  .get(jobController.getJob)
   .put(authController.protect, jobController.editJob);
 
 module.exports = router;
