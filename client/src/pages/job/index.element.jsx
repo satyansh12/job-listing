@@ -1,11 +1,20 @@
-import Header from '../../components/Header';
+import { useContext } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { BadgeIndianRupee } from 'lucide-react';
+
 import styles from './styles/index.module.css';
-import Text from '../../components/ui/Text';
-import Button from '../../components/ui/Button';
-import { BadgeIndianRupee, Calendar } from 'lucide-react';
+import Header from '../../components/Header';
 import Badge from '../../components/ui/Badge';
+import Button from '../../components/ui/Button';
+import Text from '../../components/ui/Text';
+import { AuthContext } from '../../store/authContext';
 
 export default function Job() {
+  const authCtx = useContext(AuthContext);
+  const data = useLoaderData();
+  const job = data.data.job;
+  console.log(job);
+
   return (
     <>
       <Header />
@@ -21,19 +30,19 @@ export default function Job() {
           <div className={styles.metadata}>
             <Text>1w ago</Text>
             <Text>•</Text>
-            <Text>Full Time</Text>
+            <Text>{job.jobType}</Text>
           </div>
 
           <div className={styles.position}>
             <div>
               <Text step={9} weight="500">
-                WordPress Development
+                {job.jobPosition}
               </Text>
               <Text step={4} color="red">
-                Bangalore | India
+                {job.location}
               </Text>
             </div>
-            <Button>Edit</Button>
+            {authCtx.user && <Button>Edit</Button>}
           </div>
 
           <div className={styles.details}>
@@ -42,15 +51,7 @@ export default function Job() {
                 <BadgeIndianRupee size={20} />
                 <Text step={3}>Stipend</Text>
               </div>
-              <Text>Rs 250000/month</Text>
-            </div>
-
-            <div>
-              <div className={styles.icon}>
-                <Calendar size={20} />
-                <Text step={3}>Duration</Text>
-              </div>
-              <Text>6 months</Text>
+              <Text>{job.monthlySalary}</Text>
             </div>
           </div>
 
@@ -59,13 +60,7 @@ export default function Job() {
               About company
             </Text>
             <Text step={4} style={{ opacity: '0.8' }}>
-              We provide technology-based services to help businesses and
-              organizations achieve their goals. We offer a wide range of
-              services, including software development, system integration,
-              network and security services, cloud computing, and data
-              analytics. Our primary focus is on leveraging technology to
-              streamline business processes, improve productivity, and enhance
-              overall efficiency.
+              {job.about}
             </Text>
           </div>
 
@@ -74,20 +69,7 @@ export default function Job() {
               About the job/internship
             </Text>
             <Text step={4} style={{ opacity: '0.8' }}>
-              We are looking for a responsible PHP/WordPress/Laravel/Shopify
-              Developer. He/She will be liable for managing services and
-              therefore the interchange of knowledge between the server and the
-              users. The candidate's primary focus is going to be the event of
-              all server-side logic, definition, and maintenance of the central
-              database and ensuring high performance and responsiveness to
-              requests from the front end. Selected intern's day-to-day
-              responsibilities include: 1. Work on the development of theme
-              customization, liquid programming language, and corresponding apps
-              2. Implement system integrations that are crucial to our success
-              3. Contribute to the development of HTML5/CSS/JavaScript and
-              standard web technologies integral to building seamless
-              multi-channel experiences 4. Work on speed optimization and making
-              a mobile-friendly website
+              {job.description}
             </Text>
           </div>
 
@@ -96,9 +78,9 @@ export default function Job() {
               Skill(s) required
             </Text>
             <div className={styles.badge}>
-              <Badge>CSS</Badge>
-              <Badge>HTML</Badge>
-              <Badge>JS</Badge>
+              {job.skills.map((el, index) => (
+                <Badge key={index}>{el}</Badge>
+              ))}
             </div>
           </div>
 
@@ -107,9 +89,7 @@ export default function Job() {
               Additional Information
             </Text>
             <Text step={4} style={{ opacity: '0.8' }}>
-              Stipend structure: This is a performance-based internship. In
-              addition to the minimum-assured stipend, you will also be paid a
-              performance-linked incentive (₹ 2500 per design).
+              {job.information}
             </Text>
           </div>
         </div>

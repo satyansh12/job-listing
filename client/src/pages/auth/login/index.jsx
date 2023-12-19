@@ -1,22 +1,23 @@
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import toast from 'react-hot-toast';
 
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import Text from '../../components/ui/Text';
-import styles from './styles/LoginForm.module.css';
+import styles from './styles/index.module.css';
+import { Button, Input, Text } from '../../../components/ui/index';
+import { AuthContext } from '../../../store/authContext';
 
 const schema = yup
   .object({
     email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
+    password: yup.string().required(),
   })
   .required();
 
-export default function LoginForm() {
+export default function Login() {
+  const authCtx = useContext(AuthContext);
   const navigate = useNavigate();
 
   const {
@@ -58,7 +59,7 @@ export default function LoginForm() {
           recruiterName: resData.recruiterName,
         };
 
-        localStorage.setItem('user', JSON.stringify(user));
+        authCtx.saveUser(user);
         navigate('/');
       }
     } catch (error) {
@@ -104,7 +105,7 @@ export default function LoginForm() {
         Don’t have an account?{' '}
         <span>
           {' '}
-          <Link to="/register">Sign up</Link>
+          <Link to="/auth/register">Sign up</Link>
         </span>
       </Text>
     </form>

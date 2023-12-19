@@ -1,14 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import toast from 'react-hot-toast';
 import * as yup from 'yup';
 
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
-import Text from '../../components/ui/Text';
-import styles from './styles/RegisterForm.module.css';
-import toast from 'react-hot-toast';
+import styles from './styles/index.module.css';
+import { Button, Input, Text } from '../../../components/ui/index';
+import { AuthContext } from '../../../store/authContext';
 
 const phoneRegex =
   /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
@@ -29,7 +28,8 @@ const schema = yup
   })
   .required();
 
-export default function RegisterForm() {
+export default function Register() {
+  const authCtx = useContext(AuthContext);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
 
@@ -73,7 +73,7 @@ export default function RegisterForm() {
             recruiterName: resData.recruiterName,
           };
 
-          localStorage.setItem('user', JSON.stringify(user));
+          authCtx.saveUser(user);
           navigate('/');
         }
       } catch (error) {
@@ -151,7 +151,7 @@ export default function RegisterForm() {
       <Text style={{ marginTop: '0.6rem' }} step={4}>
         Already have an account?
         <span>
-          <Link to="/login">Sign in</Link>
+          <Link to="/auth/login">Sign in</Link>
         </span>
       </Text>
     </form>

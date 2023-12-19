@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import styles from './RootLayout.module.css';
+import AuthProvider from '../store/authContext';
 
 export default function RootLayout() {
   return (
@@ -9,7 +10,9 @@ export default function RootLayout() {
         <Toaster position="bottom-left" reverseOrder={false} />
       </div>
       <main>
-        <Outlet />
+        <AuthProvider>
+          <Outlet />
+        </AuthProvider>
       </main>
     </>
   );

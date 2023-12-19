@@ -14,6 +14,7 @@ const schema = yup
     companyName: yup.string().required(),
     logo: yup.string().url().required(),
     monthlySalary: yup.string().required(),
+    jobPosition: yup.string().required(),
     jobType: yup
       .string()
       .oneOf(['Fulltime', 'Part time', 'Temporary'])
@@ -101,6 +102,18 @@ export default function JobForm({ title = 'Add job description' }) {
             placeholder="Enter the link"
           />
           <Text color="red">{errors.logo?.message}</Text>
+        </div>
+
+        <div className={styles.inputField}>
+          <label htmlFor="logo">
+            <Text>Job Position</Text>
+          </label>
+          <Input
+            register={register}
+            label="jobPosition"
+            placeholder="Enter the link"
+          />
+          <Text color="red">{errors.jobPosition?.message}</Text>
         </div>
 
         <div className={styles.inputField}>

@@ -11,6 +11,10 @@ const jobSchema = mongoose.Schema({
     validate: [validator.isURL, 'Enter a valid URL'],
     required: [true, 'Logo is required']
   },
+  jobPosition: {
+    type: String,
+    required: [true, 'Job Positon is required']
+  },
   monthlySalary: {
     type: String,
     default: null,

@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RootLayout from './pages/RootLayout';
 import Home from './pages/home';
-import Login from './pages/login';
-import Register from './pages/register';
+import Login from './pages/auth/login';
+import Register from './pages/auth/register';
 import EditJob from './pages/editJob';
 import Job from './pages/job/index.element';
 import AddJob from './pages/addJob';
-// import jobLoader from './pages/job/index.loader';
+import jobLoader from './pages/job/index.loader';
 import ErrorElement from './pages/ErrorElement';
+import AuthLayout from './pages/auth/AuthLayout';
 
 const router = createBrowserRouter([
   {
@@ -16,14 +17,25 @@ const router = createBrowserRouter([
     errorElement: <ErrorElement />,
     children: [
       { index: true, element: <Home /> },
-      { path: 'login', element: <Login /> },
-      { path: 'register', element: <Register /> },
-      { path: 'post-job', element: <AddJob /> },
       {
-        path: ':id',
+        path: 'auth',
+        element: <AuthLayout />,
         children: [
-          { index: true, element: <Job /> },
-          { path: 'edit', element: <EditJob /> },
+          { path: 'login', element: <Login /> },
+          { path: 'register', element: <Register /> },
+        ],
+      },
+      {
+        path: 'jobs',
+        children: [
+          { path: 'post', element: <AddJob /> },
+          {
+            path: ':id',
+            children: [
+              { index: true, element: <Job />, loader: jobLoader },
+              { path: 'edit', element: <EditJob /> },
+            ],
+          },
         ],
       },
     ],

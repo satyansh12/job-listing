@@ -7,6 +7,7 @@ exports.addJob = catchAsync(async (req, res, next) => {
     companyName,
     logo,
     monthlySalary,
+    jobPosition,
     jobType,
     category,
     location,
@@ -19,6 +20,7 @@ exports.addJob = catchAsync(async (req, res, next) => {
   const job = await Job.create({
     companyName,
     logo,
+    jobPosition,
     monthlySalary,
     jobType,
     category,
