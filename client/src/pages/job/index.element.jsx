@@ -1,17 +1,17 @@
-import { useContext } from 'react';
-import { useLoaderData } from 'react-router-dom';
 import { BadgeIndianRupee } from 'lucide-react';
+import { useContext } from 'react';
+import { Link, useRouteLoaderData } from 'react-router-dom';
 
-import styles from './styles/index.module.css';
 import Header from '../../components/Header';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import Text from '../../components/ui/Text';
 import { AuthContext } from '../../store/authContext';
+import styles from './styles/index.module.css';
 
 export default function Job() {
   const authCtx = useContext(AuthContext);
-  const data = useLoaderData();
+  const data = useRouteLoaderData('job');
   const job = data.data.job;
   console.log(job);
 
@@ -42,7 +42,11 @@ export default function Job() {
                 {job.location}
               </Text>
             </div>
-            {authCtx.user && <Button>Edit</Button>}
+            {authCtx.user && (
+              <Link to="edit">
+                <Button>Edit</Button>
+              </Link>
+            )}
           </div>
 
           <div className={styles.details}>

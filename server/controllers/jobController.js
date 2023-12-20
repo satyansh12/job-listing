@@ -39,16 +39,11 @@ exports.addJob = catchAsync(async (req, res, next) => {
 });
 
 exports.editJob = catchAsync(async (req, res, next) => {
-  // Check if job belongs to the user
   const { id } = req.params;
   const job = await Job.findById(id);
 
   if (!job) {
     return next(new AppError('Job not found'));
-  }
-
-  if (!job.createdBy === req.user.id) {
-    return next(new AppError('You are not allowed to edit this job', 401));
   }
 
   //Update the job

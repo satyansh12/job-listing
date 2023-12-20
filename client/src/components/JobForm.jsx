@@ -1,8 +1,8 @@
-import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useRouteLoaderData } from 'react-router-dom';
+import * as yup from 'yup';
 
 import styles from './styles/JobForm.module.css';
 import Button from './ui/Button';
@@ -28,24 +28,34 @@ const schema = yup
   })
   .required();
 
-export default function JobForm({ title = 'Add job description' }) {
+export default function JobForm({
+  title = 'Add job description',
+  toastMessage = 'Successfully posted job',
+  action = 'Add job',
+}) {
+  const data = useRouteLoaderData('job');
+  const job = data.data.job;
   const navigate = useNavigate();
+  const { id } = useParams();
+  const useFormObject = { resolver: yupResolver(schema) };
+
+  if (id) {
+    useFormObject.defaultValues = job;
+  }
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-  });
+  } = useForm(useFormObject);
 
   const onSubmit = async (data) => {
     const token = JSON.parse(localStorage.getItem('user')).token;
     try {
       const res = await fetch(
-        import.meta.env.VITE_SERVER_URL + '/api/v1/jobs',
+        import.meta.env.VITE_SERVER_URL + '/api/v1/jobs/' + id,
         {
-          method: 'POST',
+          method: 'PUT',
           body: JSON.stringify(data),
           headers: {
             'Content-Type': 'application/json',
@@ -67,7 +77,7 @@ export default function JobForm({ title = 'Add job description' }) {
       }
 
       navigate('/');
-      toast.success('Successfully posted job');
+      toast.success(toastMessage);
     } catch (error) {
       console.log(error.message);
     }
@@ -75,14 +85,14 @@ export default function JobForm({ title = 'Add job description' }) {
 
   return (
     <div className={styles.container}>
-      <Text step={6} weight="500">
+      <Text step={7} weight="500">
         {title}
       </Text>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputField}>
           <label htmlFor="companyName">
-            <Text>Company Name</Text>
+            <Text step={4}>Company Name</Text>
           </label>
           <Input
             label="companyName"
@@ -94,7 +104,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="logo">
-            <Text>Add logo URL</Text>
+            <Text step={4}>Add logo URL</Text>
           </label>
           <Input
             register={register}
@@ -106,7 +116,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="logo">
-            <Text>Job Position</Text>
+            <Text step={4}>Job Position</Text>
           </label>
           <Input
             register={register}
@@ -118,7 +128,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="monthlySalary">
-            <Text>Monthly Salary</Text>
+            <Text step={4}>Monthly Salary</Text>
           </label>
           <Input
             register={register}
@@ -130,7 +140,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="jobType">
-            <Text>Job Type</Text>
+            <Text step={4}>Job Type</Text>
           </label>
           <div className={styles.selectBox}>
             <select {...register('jobType')} name="jobType" id="jobType">
@@ -145,7 +155,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="category">
-            <Text>Category</Text>
+            <Text step={4}>Category</Text>
           </label>
           <div className={styles.selectBox}>
             <select {...register('category')} name="category" id="category">
@@ -159,7 +169,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="location">
-            <Text>Location</Text>
+            <Text step={4}>Location</Text>
           </label>
           <Input
             register={register}
@@ -171,7 +181,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="description">
-            <Text>Job Description</Text>
+            <Text step={4}>Job Description</Text>
           </label>
           <textarea
             {...register('description')}
@@ -185,7 +195,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="about">
-            <Text>About Company</Text>
+            <Text step={4}>About Company</Text>
           </label>
           <textarea
             {...register('about')}
@@ -199,7 +209,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="skills">
-            <Text>Skills Required</Text>
+            <Text step={4}>Skills Required</Text>
           </label>
           <Input
             register={register}
@@ -211,7 +221,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.inputField}>
           <label htmlFor="information">
-            <Text>Information</Text>
+            <Text step={4}>Information</Text>
           </label>
           <Input
             register={register}
@@ -223,7 +233,7 @@ export default function JobForm({ title = 'Add job description' }) {
 
         <div className={styles.action}>
           <Button>Cancel</Button>
-          <Button>Add Job</Button>
+          <Button>{action}</Button>
         </div>
       </form>
     </div>

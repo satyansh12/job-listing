@@ -62,7 +62,9 @@ jobSchema.pre('save', function(next) {
 
 jobSchema.pre('updateOne', function(next) {
   const data = this.getUpdate();
-  data.skills = data.skills.split(',').map(el => el.trim());
+  if (data.skills) {
+    data.skills = data.skills.split(',').map(el => el.trim());
+  }
 
   next();
 });

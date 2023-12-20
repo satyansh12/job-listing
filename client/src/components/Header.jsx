@@ -12,18 +12,18 @@ export default function Header() {
     <div className={styles.header}>
       <img src={image} alt="" />
       <main>
-        <Text step={6} color="white" weight="500">
-          JobFinder
-        </Text>
+        <Link to="/">
+          <Text step={6} color="white" weight="500">
+            JobFinder
+          </Text>
+        </Link>
         <div className={styles.actions}>
           {authCtx.user ? (
             <>
               <Link onClick={authCtx.logout}>
-                <Link onClick={authCtx.logout}>
-                  <Text step={4} color="white">
-                    Logout
-                  </Text>
-                </Link>
+                <Text step={4} color="white">
+                  Logout
+                </Text>
               </Link>
               <div>
                 <Text step={4} color="white">

@@ -2,7 +2,11 @@
   max-width: 70%;
   margin: auto;
   position: relative;
-  top: -2rem;
+  top: -1.5rem;
+}
+
+.position a {
+  width: 200px;
 }
 
 .title {

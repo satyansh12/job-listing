@@ -27,12 +27,14 @@ const router = createBrowserRouter([
       },
       {
         path: 'jobs',
+        loader: jobLoader,
+        id: 'job',
         children: [
           { path: 'post', element: <AddJob /> },
           {
             path: ':id',
             children: [
-              { index: true, element: <Job />, loader: jobLoader },
+              { index: true, element: <Job /> },
               { path: 'edit', element: <EditJob /> },
             ],
           },
