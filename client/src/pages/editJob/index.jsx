@@ -1,10 +1,21 @@
+import { useParams, useRouteLoaderData } from 'react-router-dom';
 import JobForm from '../../components/JobForm';
 import JobUpdatePage from '../../components/JobUpdatePage';
 
 export default function EditJob() {
+  const data = useRouteLoaderData('job');
+  const job = data.data.job;
+  const { id } = useParams();
+
   return (
     <JobUpdatePage>
-      <JobForm action="Update job" toastMessage="Successfully updated job" />
+      <JobForm
+        jobDetails={job}
+        action="Update job"
+        toastMessage="Successfully updated job"
+        id={id}
+        method="PUT"
+      />
     </JobUpdatePage>
   );
 }

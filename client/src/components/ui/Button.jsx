@@ -6,8 +6,9 @@ export default function Button({
   disabled = false,
   onClick,
   icon,
-  inlineStyles,
+  style,
   size,
+  type = 'submit',
 }) {
   const buttonVariant = styles[variant];
   const buttonWithIcon = icon ? styles.withIcon : '';
@@ -18,7 +19,8 @@ export default function Button({
       onClick={onClick}
       className={`${styles.button} ${buttonVariant} ${buttonWithIcon} ${buttonSize}`}
       disabled={disabled}
-      style={{ ...inlineStyles }}
+      style={{ ...style }}
+      type={type}
     >
       {children}
       {icon && <div className={styles.icon}>{icon}</div>}

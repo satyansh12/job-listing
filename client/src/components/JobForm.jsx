@@ -1,13 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useNavigate, useParams, useRouteLoaderData } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 
+import FormInput from './form/FormInput';
 import styles from './styles/JobForm.module.css';
-import Button from './ui/Button';
-import Input from './ui/Input';
-import Text from './ui/Text';
+import { Button, Text } from './ui/index';
 
 const schema = yup
   .object({
@@ -29,19 +28,24 @@ const schema = yup
   .required();
 
 export default function JobForm({
+  id,
+  jobDetails = {},
   title = 'Add job description',
   toastMessage = 'Successfully posted job',
-  action = 'Add job',
+  action = '+ Add job',
+  method = 'POST',
 }) {
-  const data = useRouteLoaderData('job');
-  const job = data.data.job;
   const navigate = useNavigate();
-  const { id } = useParams();
   const useFormObject = { resolver: yupResolver(schema) };
 
-  if (id) {
-    useFormObject.defaultValues = job;
+  if (jobDetails.skills) {
+    jobDetails = {
+      ...jobDetails,
+      skills: jobDetails.skills.join(','),
+    };
   }
+
+  useFormObject.defaultValues = jobDetails;
 
   const {
     register,
@@ -50,51 +54,52 @@ export default function JobForm({
   } = useForm(useFormObject);
 
   const onSubmit = async (data) => {
+    let url = import.meta.env.VITE_SERVER_URL + '/api/v1/jobs/';
+
+    if (id) {
+      url += id;
+    }
+
     const token = JSON.parse(localStorage.getItem('user')).token;
     try {
-      const res = await fetch(
-        import.meta.env.VITE_SERVER_URL + '/api/v1/jobs/' + id,
-        {
-          method: 'PUT',
-          body: JSON.stringify(data),
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
-          },
-        }
-      );
-
+      const res = await fetch(url, {
+        method,
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      });
       const resData = await res.json();
 
       if (!res.ok) {
-        toast.error(resData.message, {
-          style: {
-            background: '#333',
-            color: '#fff',
-          },
-        });
         throw new Error(resData.message);
       }
 
       navigate('/');
       toast.success(toastMessage);
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message, {
+        style: {
+          background: '#333',
+          color: '#fff',
+        },
+      });
     }
   };
 
   return (
     <div className={styles.container}>
-      <Text step={7} weight="500">
+      <Text step={6} weight="500">
         {title}
       </Text>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.inputField}>
           <label htmlFor="companyName">
-            <Text step={4}>Company Name</Text>
+            <Text step={3}>Company Name</Text>
           </label>
-          <Input
+          <FormInput
             label="companyName"
             register={register}
             placeholder="Enter your company name here"
@@ -104,9 +109,9 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="logo">
-            <Text step={4}>Add logo URL</Text>
+            <Text step={3}>Add logo URL</Text>
           </label>
-          <Input
+          <FormInput
             register={register}
             label="logo"
             placeholder="Enter the link"
@@ -116,9 +121,9 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="logo">
-            <Text step={4}>Job Position</Text>
+            <Text step={3}>Job Position</Text>
           </label>
-          <Input
+          <FormInput
             register={register}
             label="jobPosition"
             placeholder="Enter the link"
@@ -128,9 +133,9 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="monthlySalary">
-            <Text step={4}>Monthly Salary</Text>
+            <Text step={3}>Monthly Salary</Text>
           </label>
-          <Input
+          <FormInput
             register={register}
             label="monthlySalary"
             placeholder="Enter Amount in rupees"
@@ -140,10 +145,15 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="jobType">
-            <Text step={4}>Job Type</Text>
+            <Text step={3}>Job Type</Text>
           </label>
           <div className={styles.selectBox}>
-            <select {...register('jobType')} name="jobType" id="jobType">
+            <select
+              {...register('jobType')}
+              name="jobType"
+              id="jobType"
+              className={styles.select}
+            >
               <option value="">Select</option>
               <option value="Fulltime">Fulltime</option>
               <option value="Part time">Partime</option>
@@ -155,10 +165,15 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="category">
-            <Text step={4}>Category</Text>
+            <Text step={3}>Category</Text>
           </label>
           <div className={styles.selectBox}>
-            <select {...register('category')} name="category" id="category">
+            <select
+              {...register('category')}
+              name="category"
+              id="category"
+              className={styles.select}
+            >
               <option value="">Select</option>
               <option value="Remote">Remote</option>
               <option value="Office">Office</option>
@@ -169,9 +184,9 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="location">
-            <Text step={4}>Location</Text>
+            <Text step={3}>Location</Text>
           </label>
-          <Input
+          <FormInput
             register={register}
             label="location"
             placeholder="Enter Location"
@@ -181,7 +196,7 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="description">
-            <Text step={4}>Job Description</Text>
+            <Text step={3}>Job Description</Text>
           </label>
           <textarea
             {...register('description')}
@@ -195,7 +210,7 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="about">
-            <Text step={4}>About Company</Text>
+            <Text step={3}>About Company</Text>
           </label>
           <textarea
             {...register('about')}
@@ -209,9 +224,9 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="skills">
-            <Text step={4}>Skills Required</Text>
+            <Text step={3}>Skills Required</Text>
           </label>
-          <Input
+          <FormInput
             register={register}
             label="skills"
             placeholder="Enter the must have skills"
@@ -221,9 +236,9 @@ export default function JobForm({
 
         <div className={styles.inputField}>
           <label htmlFor="information">
-            <Text step={4}>Information</Text>
+            <Text step={3}>Information</Text>
           </label>
-          <Input
+          <FormInput
             register={register}
             label="information"
             placeholder="Enter the additional information"
@@ -232,7 +247,15 @@ export default function JobForm({
         </div>
 
         <div className={styles.action}>
-          <Button>Cancel</Button>
+          <Link to="/">
+            <Button
+              type="button"
+              variant="outline"
+              style={{ color: ' var(--neutral)' }}
+            >
+              Cancel
+            </Button>
+          </Link>
           <Button>{action}</Button>
         </div>
       </form>

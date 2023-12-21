@@ -5,7 +5,7 @@ import Login from './pages/auth/login';
 import Register from './pages/auth/register';
 import EditJob from './pages/editJob';
 import Job from './pages/job/index.element';
-import AddJob from './pages/addJob';
+import AddJob from './pages/postJob';
 import jobLoader from './pages/job/index.loader';
 import ErrorElement from './pages/ErrorElement';
 import AuthLayout from './pages/auth/AuthLayout';
@@ -27,12 +27,12 @@ const router = createBrowserRouter([
       },
       {
         path: 'jobs',
-        loader: jobLoader,
-        id: 'job',
         children: [
           { path: 'post', element: <AddJob /> },
           {
             path: ':id',
+            loader: jobLoader,
+            id: 'job',
             children: [
               { index: true, element: <Job /> },
               { path: 'edit', element: <EditJob /> },

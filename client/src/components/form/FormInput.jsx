@@ -1,6 +1,13 @@
-import styles from './styles/Input.module.css';
+import styles from './styles/FormInput.module.css';
 
-export default function Input({ variant, placeholder, label, type = 'text' }) {
+export default function FormInput({
+  variant,
+  placeholder,
+  label,
+  register,
+  required,
+  type = 'text',
+}) {
   const inputVariant = variant == 'large' ? styles.largeInput : '';
 
   return (
@@ -9,6 +16,7 @@ export default function Input({ variant, placeholder, label, type = 'text' }) {
       type={type}
       placeholder={placeholder}
       className={`${styles.input} ${inputVariant}`}
+      {...register(label, { required })}
     />
   );
 }

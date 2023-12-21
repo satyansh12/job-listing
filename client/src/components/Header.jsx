@@ -34,7 +34,9 @@ export default function Header() {
           ) : (
             <>
               <Link to="/auth/login">
-                <Button variant="soft">Login</Button>
+                <Button variant="outline" style={{ color: 'white' }}>
+                  Login
+                </Button>
               </Link>
               <Link to="/auth/register">
                 <Button variant="secondary">Register</Button>

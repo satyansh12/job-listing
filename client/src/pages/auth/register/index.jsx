@@ -6,8 +6,9 @@ import toast from 'react-hot-toast';
 import * as yup from 'yup';
 
 import styles from './styles/index.module.css';
-import { Button, Input, Text } from '../../../components/ui/index';
+import { Button, Text } from '../../../components/ui/index';
 import { AuthContext } from '../../../store/authContext';
+import FormInput from '../../../components/form/FormInput';
 
 const phoneRegex =
   /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
@@ -93,43 +94,43 @@ export default function Register() {
 
       <div className={styles.inputs}>
         <div className={styles.inputBox}>
-          <Input
+          <FormInput
             variant="large"
             label="name"
             register={register}
             placeholder="Name"
-          ></Input>
+          ></FormInput>
           <Text color="red">{errors.name?.message}</Text>
         </div>
 
         <div className={styles.inputBox}>
-          <Input
+          <FormInput
             variant="large"
             label="email"
             register={register}
             placeholder="Email"
-          ></Input>
+          ></FormInput>
           <Text color="red">{errors.email?.message}</Text>
         </div>
 
         <div className={styles.inputBox}>
-          <Input
+          <FormInput
             variant="large"
             label="mobile"
             register={register}
             placeholder="Mobile"
-          ></Input>
+          ></FormInput>
           <Text color="red">{errors.mobile?.message}</Text>
         </div>
 
         <div className={styles.inputBox}>
-          <Input
+          <FormInput
             variant="large"
             label="password"
             register={register}
             type="password"
             placeholder="Password"
-          ></Input>
+          ></FormInput>
           <Text color="red">{errors.password?.message}</Text>
         </div>
 

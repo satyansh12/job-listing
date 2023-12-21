@@ -57,6 +57,11 @@
   gap: 0.5rem;
 }
 
+.position > a{
+  display: flex;
+  justify-content: flex-end;
+}
+
 .position button {
   max-height: min-content;
 }

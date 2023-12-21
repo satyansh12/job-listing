@@ -6,8 +6,9 @@ import * as yup from 'yup';
 import toast from 'react-hot-toast';
 
 import styles from './styles/index.module.css';
-import { Button, Input, Text } from '../../../components/ui/index';
+import { Button, Text } from '../../../components/ui/index';
 import { AuthContext } from '../../../store/authContext';
+import FormInput from '../../../components/form/FormInput';
 
 const schema = yup
   .object({
@@ -78,23 +79,23 @@ export default function Login() {
 
       <div className={styles.inputs}>
         <div className={styles.inputBox}>
-          <Input
+          <FormInput
             variant="large"
             label="email"
             register={register}
             placeholder="Email"
-          ></Input>
+          ></FormInput>
           <Text color="red">{errors.email?.message}</Text>
         </div>
 
         <div className={styles.inputBox}>
-          <Input
+          <FormInput
             variant="large"
             label="password"
             register={register}
             type="password"
             placeholder="Password"
-          ></Input>
+          ></FormInput>
           <Text color="red">{errors.password?.message}</Text>
         </div>
       </div>

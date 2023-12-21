@@ -13,7 +13,6 @@ export default function Job() {
   const authCtx = useContext(AuthContext);
   const data = useRouteLoaderData('job');
   const job = data.data.job;
-  console.log(job);
 
   return (
     <>
@@ -21,8 +20,8 @@ export default function Job() {
       <main className={styles.main}>
         <div className={styles.title}>
           <p>
-            WordPress Development work from home job/internship at Adyaka
-            Infosec Private Limited
+            {job.jobPosition} {job.jobType.toLowerCase()}{' '}
+            {job.category.toLowerCase()} job/internship at {job.companyName}
           </p>
         </div>
 
@@ -44,7 +43,7 @@ export default function Job() {
             </div>
             {authCtx.user && (
               <Link to="edit">
-                <Button>Edit</Button>
+                <Button>Edit job</Button>
               </Link>
             )}
           </div>
