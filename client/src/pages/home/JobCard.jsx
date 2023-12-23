@@ -7,7 +7,7 @@ import { Badge, Button, Text } from '../../components/ui/index';
 
 export default function JobCard({ job, authCtx }) {
   return (
-    <div key={job._id} className={styles.job}>
+    <div className={styles.job}>
       <div className={styles.jobLogo}>
         <img src={job.logo} alt={job.companyName} />
       </div>
@@ -35,7 +35,9 @@ export default function JobCard({ job, authCtx }) {
       <div className={styles.rightBlock}>
         <div className={styles.skills}>
           {job.skills.slice(0, 3).map((skill, index) => (
-            <Badge key={index}>{skill}</Badge>
+            <Badge shape="pill" key={index}>
+              {skill}
+            </Badge>
           ))}
           {job.skills.length > 3 && (
             <>

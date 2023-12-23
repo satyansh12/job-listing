@@ -59,13 +59,17 @@ exports.getJobs = catchAsync(async (req, res, next) => {
   const queryObj = { ...req.query };
   const query = Job.find();
 
-  if (queryObj.jobPostion && typeof queryObj.jobPostion === 'string') {
-    query.find({ jobPostion: queryObj.jobPostion });
+  if (queryObj.jobPosition && typeof queryObj.jobPosition === 'string') {
+    query.find({ jobPosition: queryObj.jobPosition });
   }
 
   if (queryObj.skills && typeof queryObj.skills === 'string') {
-    const skillsArr = queryObj.skills.split(',').map(el => el.trim());
-    query.find({ skills: { $in: skillsArr } });
+    const skillsArr = queryObj.skills
+      .split(',')
+      .map(el => el.trim().toLowerCase());
+    query.find({
+      skills: { $in: skillsArr.map(skill => new RegExp(skill, 'i')) }
+    });
   }
 
   const jobs = await query;

@@ -8,20 +8,32 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .inputField {
   display: flex;
-  align-items: baseline;
 }
 
-.inputField input,
+.contoller {
+  border: 2px solid red;
+}
+
+.inputField .group {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
 .inputField textarea {
   flex: 5;
 }
 
 .inputField label {
-  flex: 2;
+  width: 30%;
+  padding: 10px 0px;
 }
 
 .action {

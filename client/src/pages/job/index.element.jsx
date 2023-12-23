@@ -30,6 +30,10 @@ export default function Job() {
             <Text>1w ago</Text>
             <Text>•</Text>
             <Text>{job.jobType}</Text>
+            <div className={styles.logo}>
+              <img src={job.logo} alt="" />
+            </div>
+            <Text>{job.companyName}</Text>
           </div>
 
           <div className={styles.position}>
@@ -82,7 +86,7 @@ export default function Job() {
             </Text>
             <div className={styles.badge}>
               {job.skills.map((el, index) => (
-                <Badge key={index}>{el}</Badge>
+                <Badge shape='pill' key={index}>{el}</Badge>
               ))}
             </div>
           </div>

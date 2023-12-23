@@ -10,7 +10,7 @@
   --primary-focus: #ff6b6b;
   --secondary: #ffffff;
   --secondary-focus: #f9f9f9;
-  --neutral: #a4a4a4;
+  --neutral: #ced4da;
   --neutral-focus: #888888;
   --error: #ff7373;
   --error-focus: #ff8585;
@@ -40,3 +40,4 @@ a {
 .shadow {
   box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;
 }
+

@@ -4,6 +4,13 @@
   padding: 1rem;
   gap: 1rem;
   composes: shadow from global;
+  box-sizing: border-box;
+  transition: border-color 200ms ease-in-out;
+  border-left: 8px solid transparent;
+}
+
+.job:hover {
+  border-left: 8px solid var(--primary);
 }
 
 .jobLogo {
