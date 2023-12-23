@@ -1,6 +1,8 @@
 import styles from './styles/Input.module.css';
 
 export default function Input({
+  input,
+  setInput,
   variant,
   placeholder,
   label,
@@ -16,6 +18,8 @@ export default function Input({
       name={name}
       placeholder={placeholder}
       className={`${styles.input} ${inputVariant}`}
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
     />
   );
 }

@@ -59,9 +59,7 @@ export default function JobForm({
   const onSubmit = async (data) => {
     let url = import.meta.env.VITE_SERVER_URL + '/api/v1/jobs/';
 
-    if (id) {
-      url += id;
-    }
+    if (id) url += id;
 
     const token = JSON.parse(localStorage.getItem('user')).token;
     try {
@@ -73,13 +71,22 @@ export default function JobForm({
           Authorization: 'Bearer ' + token,
         },
       });
-      const resData = await res.json();
+      const { status } = res;
 
       if (!res.ok) {
-        throw new Error(resData.message);
+        switch (status) {
+          case 401:
+            throw new Error(
+              'Your login session has expired. Please login again'
+            );
+          case 404:
+            throw new Error('Route does not exist');
+          default:
+            throw new Error('Something went wrong');
+        }
       }
 
-      navigate('/');
+      navigate('..', { relative: 'path' });
       toast.success(toastMessage);
     } catch (error) {
       toast.error(error.message, {
@@ -89,7 +96,6 @@ export default function JobForm({
         },
       });
     }
-    console.log(data);
   };
 
   const jobTypes = [
@@ -112,8 +118,6 @@ export default function JobForm({
   if (jobDetails.category) {
     categoryIndex = category.map((e) => e.name).indexOf(jobDetails.category);
   }
-
-  console.log(jobTypeIndex, categoryIndex);
 
   return (
     <div className={styles.container}>

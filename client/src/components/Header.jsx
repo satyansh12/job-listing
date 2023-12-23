@@ -21,13 +21,16 @@ export default function Header() {
           {authCtx.user ? (
             <>
               <Link onClick={authCtx.logout}>
-                <Text step={4} color="white">
+                <Button variant="primary" step={4} color="white">
                   Logout
-                </Text>
+                </Button>
               </Link>
               <div>
-                <Text step={4} color="white">
-                  {authCtx.user.recruiterName}
+                <Text step={2} weight='500' color="white">
+                  Hello!{', '}
+                  <span style={{  fontSize: '18px' }}>
+                    {authCtx.user.recruiterName}
+                  </span>
                 </Text>
               </div>
             </>

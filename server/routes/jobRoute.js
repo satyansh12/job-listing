@@ -12,6 +12,7 @@ router
 router
   .route('/:id')
   .get(jobController.getJob)
-  .put(authController.protect, jobController.editJob);
+  .put(authController.protect, jobController.editJob)
+  .delete(authController.protect, jobController.deleteJob);
 
 module.exports = router;

@@ -7,7 +7,16 @@ export default function RootLayout() {
   return (
     <>
       <div className={styles.toast}>
-        <Toaster position="bottom-left" reverseOrder={false} />
+        <Toaster
+          position="bottom-left"
+          reverseOrder={false}
+          toastOptions={{
+            style: {
+              background: '#333',
+              color: '#fff',
+            },
+          }}
+        />
       </div>
       <main>
         <AuthProvider>

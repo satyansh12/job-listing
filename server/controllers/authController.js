@@ -64,7 +64,7 @@ exports.protect = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'Token is not valid, or has expired. Login to get the token.',
-        400
+        401
       )
     );
   }

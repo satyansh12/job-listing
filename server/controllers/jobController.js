@@ -43,7 +43,7 @@ exports.editJob = catchAsync(async (req, res, next) => {
   const job = await Job.findById(id);
 
   if (!job) {
-    return next(new AppError('Job not found'));
+    return next(new AppError('Job not found', 404));
   }
 
   //Update the job
@@ -60,7 +60,12 @@ exports.getJobs = catchAsync(async (req, res, next) => {
   const query = Job.find();
 
   if (queryObj.jobPosition && typeof queryObj.jobPosition === 'string') {
-    query.find({ jobPosition: queryObj.jobPosition });
+    const regex = new RegExp(queryObj.jobPosition, 'i');
+    query
+      .find({
+        jobPosition: { $regex: regex }
+      })
+      .collation({ locale: 'en', strength: 2 });
   }
 
   if (queryObj.skills && typeof queryObj.skills === 'string') {
@@ -88,5 +93,19 @@ exports.getJob = catchAsync(async (req, res, next) => {
   res.status(200).send({
     status: 'success',
     data: { job }
+  });
+});
+
+exports.deleteJob = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const job = await Job.findByIdAndDelete(id);
+
+  if (!job) {
+    return next(new AppError('Cant find the job with this id', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null
   });
 });

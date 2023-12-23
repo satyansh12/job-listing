@@ -85,19 +85,15 @@
   padding: 0.5rem;
 }
 
-.customComboOption > div:hover {
-  background-color: rgba(253, 213, 179, 0.685);
-  color: rgb(120, 56, 1);
-}
-
 .comboOption .icon {
   width: 2rem;
   display: flex;
 }
 
-.isActive {
-  background-color: rgba(253, 213, 179, 0.685);
-  color: rgb(120, 56, 1);
+.isActive,
+.customComboOption > div:hover {
+  background-color: var(--base);
+  color: var(--primary);
 }
 
 .formButtons {

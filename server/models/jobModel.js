@@ -51,11 +51,13 @@ const jobSchema = mongoose.Schema({
     type: String,
     required: [true, 'Information is required']
   },
-  createdBy: mongoose.ObjectId
+  createdBy: mongoose.ObjectId,
+  createdAt: Date
 });
 
 jobSchema.pre('save', function(next) {
   this.skills = [...this.skills[0].split(',').map(el => el.trim())];
+  this.createdAt = Date.now();
 
   next();
 });

@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
     required: [true, 'Mobile is required'],
     validate: {
       validator: function(value) {
-        return validator.isMobilePhone(value, 'en-IN');
+        return /^(\+91\s?[789]\d{9}|[789]\d{9})$/.test(value);
       },
       message: 'Mobile is not valid'
     }

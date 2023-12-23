@@ -45,26 +45,18 @@ export default function Login() {
       const resData = await res.json();
 
       if (!res.ok) {
-        toast.error(resData.message, {
-          style: {
-            background: '#333',
-            color: '#fff',
-          },
-        });
         throw new Error(resData.message);
       }
 
-      if (resData.token) {
-        const user = {
-          token: resData.token,
-          recruiterName: resData.recruiterName,
-        };
+      const user = {
+        token: resData.token,
+        recruiterName: resData.recruiterName,
+      };
 
-        authCtx.saveUser(user);
-        navigate('/');
-      }
+      authCtx.saveUser(user);
+      navigate('/');
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
   };
 

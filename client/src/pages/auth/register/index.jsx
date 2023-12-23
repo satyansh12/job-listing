@@ -10,8 +10,7 @@ import { Button, Text } from '../../../components/ui/index';
 import { AuthContext } from '../../../store/authContext';
 import FormInput from '../../../components/form/FormInput';
 
-const phoneRegex =
-  /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/;
+const regexPattern = /^(\+91\s?[789]\d{9}|[789]\d{9})$/;
 
 const schema = yup
   .object({
@@ -19,8 +18,7 @@ const schema = yup
     email: yup.string().email().required(),
     mobile: yup
       .string()
-      .min(6)
-      .matches(phoneRegex, {
+      .matches(regexPattern, {
         message: 'Please enter valid number.',
         excludeEmptyString: false,
       })
@@ -59,26 +57,18 @@ export default function Register() {
         const resData = await res.json();
 
         if (!res.ok) {
-          toast.error(resData.message, {
-            style: {
-              background: '#333',
-              color: '#fff',
-            },
-          });
           throw new Error(resData.message);
         }
 
-        if (resData.token) {
-          const user = {
-            token: resData.token,
-            recruiterName: resData.recruiterName,
-          };
+        const user = {
+          token: resData.token,
+          recruiterName: resData.recruiterName,
+        };
 
-          authCtx.saveUser(user);
-          navigate('/');
-        }
+        authCtx.saveUser(user);
+        navigate('/');
       } catch (error) {
-        console.log(error.message);
+        toast.error(error.message);
       }
     }
   };
@@ -139,6 +129,7 @@ export default function Register() {
             onChange={(e) => setIsChecked(e.target.checked)}
             type="checkbox"
             id="checkbox"
+            required
           />
           <label htmlFor="checkbox">
             By creating an account, I agree to our terms of use and privacy

@@ -13,18 +13,22 @@ const skills = [
   { id: 3, name: 'Azure', unavailable: false },
   { id: 4, name: 'CSS', unavailable: false },
   { id: 5, name: 'Javascript', unavailable: false },
+  { id: 6, name: 'Svelte', unavailable: false },
+  { id: 7, name: 'Java', unavailable: false },
+  { id: 8, name: 'SQL', unavailable: false },
 ];
 
-export default function SearchBox({ authCtx, paramsObj }) {
+export default function SearchBox({ authCtx, setParamsObj }) {
   const [selectedSkills, setSelectedSkills] = useState([]);
+  const [input, setInput] = useState('');
   const [query, setQuery] = useState('');
 
   const skillsString = selectedSkills.map((skill) => skill.name).join(',');
-  console.log(skillsString);
 
   const handleSubmit = (e) => {
+    console.log('Submit');
     e.preventDefault();
-    paramsObj({
+    setParamsObj({
       jobPosition: e.target.jobPosition.value ?? '',
       skills: skillsString,
     });
@@ -46,6 +50,8 @@ export default function SearchBox({ authCtx, paramsObj }) {
     <div className={styles.container}>
       <form onSubmit={handleSubmit}>
         <Input
+          input={input}
+          setInput={setInput}
           name="jobPosition"
           variant="large"
           label="jobPosition"
@@ -65,7 +71,7 @@ export default function SearchBox({ authCtx, paramsObj }) {
                 <Combobox.Input
                   onChange={(event) => setQuery(event.target.value)}
                   displayValue={(skill) => skill.name}
-                  placeholder="Filter skills"
+                  placeholder="Filter by skills"
                 />
 
                 <Combobox.Button>
@@ -86,8 +92,7 @@ export default function SearchBox({ authCtx, paramsObj }) {
                     {({ active }) => (
                       <div className={`${active ? styles.isActive : ''}`}>
                         <Text>
-                          Create{' '}
-                          <span style={{ fontWeight: '500' }}>{query}</span>
+                          Add <span style={{ fontWeight: '500' }}>{query}</span>
                         </Text>
                       </div>
                     )}
@@ -130,7 +135,11 @@ export default function SearchBox({ authCtx, paramsObj }) {
           <button
             className={styles.clearButton}
             type="button"
-            onClick={() => setSelectedSkills([])}
+            onClick={() => {
+              setQuery('');
+              setInput('');
+              setSelectedSkills([]);
+            }}
             style={{ color: 'red' }}
           >
             Clear

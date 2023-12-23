@@ -1,18 +1,72 @@
-import { BadgeIndianRupee } from 'lucide-react';
+import { Briefcase, IndianRupee } from 'lucide-react';
 import { useContext } from 'react';
-import { Link, useRouteLoaderData } from 'react-router-dom';
+import {
+  Link,
+  useNavigate,
+  useParams,
+  useRouteLoaderData,
+} from 'react-router-dom';
 
+import toast from 'react-hot-toast';
 import Header from '../../components/Header';
 import Badge from '../../components/ui/Badge';
 import Button from '../../components/ui/Button';
 import Text from '../../components/ui/Text';
 import { AuthContext } from '../../store/authContext';
+import getTimePassed from '../../utils/getTimePassed';
 import styles from './styles/index.module.css';
 
 export default function Job() {
   const authCtx = useContext(AuthContext);
+  const navigate = useNavigate();
   const data = useRouteLoaderData('job');
   const job = data.data.job;
+  const { id } = useParams();
+
+  const handleDeleteJob = async () => {
+    const confirm = window.confirm('Are you sure you want to delete this job?');
+
+    if (!confirm) {
+      return;
+    }
+
+    const url = import.meta.env.VITE_SERVER_URL + '/api/v1/jobs/' + id;
+    const token = JSON.parse(localStorage.getItem('user')).token;
+
+    try {
+      const res = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      });
+
+      if (!res.ok) {
+        switch (res.status) {
+          case 401:
+            throw new Error(
+              'Your login session has expired. Please login again'
+            );
+          case 404:
+            throw new Error('Rotute note found');
+          default:
+            throw new Error('Something went wrong');
+        }
+      }
+
+      navigate('/');
+      toast.success('Job post deleted successfully');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  let jobPostDuration;
+
+  if (job.createdAt) {
+    jobPostDuration = getTimePassed(job.createdAt);
+  }
 
   return (
     <>
@@ -27,7 +81,7 @@ export default function Job() {
 
         <div className={styles.info}>
           <div className={styles.metadata}>
-            <Text>1w ago</Text>
+            <Text>{jobPostDuration}</Text>
             <Text>•</Text>
             <Text>{job.jobType}</Text>
             <div className={styles.logo}>
@@ -55,10 +109,17 @@ export default function Job() {
           <div className={styles.details}>
             <div>
               <div className={styles.icon}>
-                <BadgeIndianRupee size={20} />
+                <IndianRupee size={20} />
                 <Text step={3}>Stipend</Text>
               </div>
-              <Text>{job.monthlySalary}</Text>
+              <Text step={4}>{job.monthlySalary}</Text>
+            </div>
+            <div>
+              <div className={styles.icon}>
+                <Briefcase size={20} />
+                <Text step={3}>Remote/Office</Text>
+              </div>
+              <Text step={4}>{job.category}</Text>
             </div>
           </div>
 
@@ -86,7 +147,9 @@ export default function Job() {
             </Text>
             <div className={styles.badge}>
               {job.skills.map((el, index) => (
-                <Badge shape='pill' key={index}>{el}</Badge>
+                <Badge shape="pill" key={index}>
+                  {el}
+                </Badge>
               ))}
             </div>
           </div>
@@ -98,6 +161,18 @@ export default function Job() {
             <Text step={4} style={{ opacity: '0.8' }}>
               {job.information}
             </Text>
+            {authCtx.user && (
+              <div className={styles.deleteButton}>
+                <Button
+                  onClick={handleDeleteJob}
+                  variant="outline"
+                  style={{ color: 'var(--primary)' }}
+                  type="button"
+                >
+                  Delete job
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </main>

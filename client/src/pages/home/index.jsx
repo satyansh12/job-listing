@@ -5,12 +5,13 @@ import { AuthContext } from '../../store/authContext';
 import JobCard from './JobCard';
 import SearchBox from './SearchBox';
 import styles from './styles/index.module.css';
+import toast from 'react-hot-toast';
 
 export default function Home() {
   const [jobs, setJobs] = useState();
   const [params, setParams] = useState({});
   const authCtx = useContext(AuthContext);
-  const paramsObj = (val) => setParams(val);
+  const setParamsObj = (val) => setParams(val);
 
   const fetchJobs = useCallback(async () => {
     try {
@@ -20,9 +21,15 @@ export default function Home() {
             params.skills ?? ''
           }`
       );
+
+      if (!res.ok) {
+        throw new Error('Something went wrong');
+      }
+
       const resData = await res.json();
       setJobs(resData.data.jobs);
     } catch (error) {
+      toast.error(error.message);
       console.log(error);
     }
   }, [params]);
@@ -35,7 +42,7 @@ export default function Home() {
     <div>
       <Header />
       <main className={styles.main}>
-        <SearchBox authCtx={authCtx} paramsObj={paramsObj} />
+        <SearchBox authCtx={authCtx} setParamsObj={setParamsObj} />
         {jobs && (
           <div className={styles.jobsCollection}>
             {jobs.map((job) => (
