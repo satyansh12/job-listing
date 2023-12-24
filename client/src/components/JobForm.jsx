@@ -87,7 +87,12 @@ export default function JobForm({
         }
       }
 
-      navigate('..', { relative: 'path' });
+      if (method === 'POST') {
+        navigate('/');
+      } else {
+        navigate('..', { relative: 'path' });
+      }
+
       toast.success(toastMessage);
     } catch (error) {
       toast.error(error.message, {
