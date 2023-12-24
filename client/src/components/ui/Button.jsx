@@ -3,12 +3,12 @@ import styles from './styles/Button.module.css';
 export default function Button({
   children = 'button',
   variant = 'primary',
-  disabled = false,
   onClick,
   icon,
   style,
   size,
   type = 'submit',
+  disabled,
 }) {
   const buttonVariant = styles[variant];
   const buttonWithIcon = icon ? styles.withIcon : '';
@@ -16,9 +16,9 @@ export default function Button({
 
   return (
     <button
+      disabled={disabled}
       onClick={onClick}
       className={`${styles.button} ${buttonVariant} ${buttonWithIcon} ${buttonSize}`}
-      disabled={disabled}
       style={{ ...style }}
       type={type}
     >

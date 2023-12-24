@@ -35,7 +35,7 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -138,7 +138,9 @@ export default function Register() {
         </div>
       </div>
 
-      <Button size="large">Sing in</Button>
+      <Button disabled={isSubmitting} size="large">
+        {isSubmitting ? 'Signing up...' : 'Sing up'}
+      </Button>
 
       <Text style={{ marginTop: '0.6rem' }} step={4}>
         Already have an account?

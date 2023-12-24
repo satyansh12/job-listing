@@ -12,6 +12,7 @@ export default function EditJob() {
       <JobForm
         jobDetails={job}
         action="Update job"
+        submitText="Updating job..."
         toastMessage="Successfully updated job"
         id={id}
         method="PUT"

@@ -21,7 +21,6 @@ export default function RootLayout() {
     if (NProgress.isStarted()) {
       NProgress.done();
     }
-    console.log(pathname);
   }, [pathname]);
 
   return (

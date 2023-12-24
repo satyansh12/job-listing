@@ -24,6 +24,10 @@
   padding: 16px 20px;
 }
 
+.button:disabled {
+  background-color: var(--neutral);
+}
+
 .withIcon {
   justify-content: space-between;
   cursor: default;

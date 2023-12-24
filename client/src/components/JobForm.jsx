@@ -35,6 +35,7 @@ export default function JobForm({
   title = 'Add job description',
   toastMessage = 'Successfully posted job',
   action = '+ Add job',
+  submitText = 'Adding job...',
   method = 'POST',
 }) {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ export default function JobForm({
     control,
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm(useFormObject);
 
   const onSubmit = async (data) => {
@@ -304,7 +305,9 @@ export default function JobForm({
               Cancel
             </Button>
           </Link>
-          <Button>{action}</Button>
+          <Button disabled={isSubmitting}>
+            {isSubmitting ? submitText : action}
+          </Button>
         </div>
       </form>
     </div>

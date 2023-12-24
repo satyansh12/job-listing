@@ -24,10 +24,12 @@ export default function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  console.log('isSubmitting', isSubmitting);
 
   const onSubmit = async (data) => {
     try {
@@ -92,7 +94,9 @@ export default function Login() {
         </div>
       </div>
 
-      <Button size="large">Sing in</Button>
+      <Button disabled={isSubmitting} size="large">
+        {isSubmitting ? 'Signing in...' : 'Sing in'}
+      </Button>
 
       <Text style={{ marginTop: '0.6rem' }} step={4}>
         Don’t have an account?{' '}
