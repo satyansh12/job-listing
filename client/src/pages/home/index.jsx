@@ -16,10 +16,9 @@ export default function Home() {
   const fetchJobs = useCallback(async () => {
     try {
       const res = await fetch(
-        import.meta.env.VITE_SERVER_URL +
-          `/api/v1/jobs?jobPosition=${params.jobPosition ?? ''}&skills=${
-            params.skills ?? ''
-          }`
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/jobs?jobPosition=${
+          params.jobPosition ?? ''
+        }&skills=${params.skills ?? ''}`
       );
 
       if (!res.ok) {

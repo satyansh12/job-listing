@@ -14,8 +14,6 @@ const app = require('./app');
 
 const PORT = process.env.PORT || 8080;
 
-console.log(process.env.NODE_ENV);
-
 mongoose
   .connect(process.env.DB_CONNECTION_STRING, {
     useNewUrlParser: true,
@@ -23,6 +21,9 @@ mongoose
   })
   .then(() => {
     console.log('✅ Successfully connected to database');
+  })
+  .catch(err => {
+    console.log(err);
   });
 
 const server = app.listen(PORT, () => {
