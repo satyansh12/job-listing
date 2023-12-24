@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Combobox } from '@headlessui/react';
 import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
@@ -6,6 +6,7 @@ import { CheckIcon, ChevronsUpDownIcon } from 'lucide-react';
 import { Badge, Button, Input, Text } from '../../components/ui/index';
 import SelectedTag from './SelectedTag';
 import styles from './styles/SearchBox.module.css';
+import { AuthContext } from '../../store/authContext';
 
 const skills = [
   { id: 1, name: 'React', unavailable: false },
@@ -18,7 +19,8 @@ const skills = [
   { id: 8, name: 'SQL', unavailable: false },
 ];
 
-export default function SearchBox({ authCtx, setParamsObj }) {
+export default function SearchBox({ setParamsObj }) {
+  const authCtx = useContext(AuthContext);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [input, setInput] = useState('');
   const [query, setQuery] = useState('');
