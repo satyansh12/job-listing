@@ -123,14 +123,14 @@ export default function SearchBox({ setParamsObj }) {
 
           <div className={styles.selected}>
             {selectedSkills.length > 0 &&
-              selectedSkills.slice(0, 4).map((el) => (
+              selectedSkills.slice(0, 3).map((el) => (
                 <SelectedTag onClick={removeSkill} key={el.id}>
                   {el}
                 </SelectedTag>
               ))}
 
-            {selectedSkills.length > 4 && (
-              <Badge>{selectedSkills.length - 1} more</Badge>
+            {selectedSkills.length > 3 && (
+              <Badge>{selectedSkills.length - 3} more</Badge>
             )}
           </div>
 
